@@ -1663,7 +1663,7 @@ mass_m_waleu <- ch_male$Mass_std
 
 ```
 
-```{r waleu ocean}
+```{r waleu ocean covariates}
 
 #adjusted year is the phi period (adj year == 1 is pups born in 2000 surviving to 2001)
 #fall and summer adj_year 0 == NA (would be Sept-Dec 1999)

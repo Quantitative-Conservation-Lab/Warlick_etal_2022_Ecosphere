@@ -17,6 +17,26 @@ library(readr)
 library(ggh4x) #nested faceting
 library(latex2exp) #TeX
 
+plot_theme_x180 <- function(...) {
+  theme(
+    #text = element_text(size = 11),
+    axis.text.x = element_text(hjust = 0.5, vjust = 0.5, color = "black", size = 11),
+    # axis.text.x = element_text(vjust = 0.5, color = "black", size = 10), 
+    axis.text = element_text(vjust = 0.5, color = "black", size = 11), 
+    axis.title = element_text(size = 11.5),
+    axis.line.y = element_line(colour = "black"), 
+    axis.line.x = element_line(colour = "black"), 
+    plot.background = element_rect(), 
+    panel.background = element_rect(fill = 'white'), 
+    #panel.border = element_rect(fill = NA), #for square around plot
+    panel.grid = element_blank(), 
+    legend.key = element_blank(),
+    strip.background = element_blank(), 
+    strip.text = element_text(size = 10),
+    legend.text = element_text(size = 10),
+    ...)
+}
+
 plot_theme <- function(...) {
   theme(
     #text = element_text(size = 11),
@@ -35,6 +55,26 @@ plot_theme <- function(...) {
     legend.text = element_text(size = 7),
     ...)
 }
+
+pres_theme <- function(...) {
+  theme(
+    #text = element_text(size = 11),
+    axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, color = "black", size = 10), 
+    axis.text = element_text(vjust = 0.5, color = "black", size = 10), 
+    axis.title = element_text(size = 11),
+    # axis.line.y = element_line(colour = "black"), 
+    # axis.line.x = element_line(colour = "black"), 
+    plot.background = element_rect(), 
+    panel.background = element_rect(fill = 'white'), 
+    #panel.border = element_rect(fill = NA), #for square around plot
+    panel.grid = element_blank(), 
+    legend.key = element_blank(),
+    strip.background = element_blank(), 
+    strip.text = element_text(size = 10),
+    legend.text = element_text(size = 10),
+    ...)
+}
+
 rainbow2 <- c("violetred4", "dodgerblue3", 'deepskyblue1', "#4aaaa5", "#a3d39c", "#f6b61c", "chocolate2", "red3")
 
 ##########################################
@@ -302,7 +342,9 @@ psi.phi.vals <- bind_rows(phi.vals, psi.vals) %>%
                          'a', 'b', 'c', 'd', 'e', 'f', 'i', 'a', 'b', 'c', 'd', 'e', 'f', 'i',
                          'k', 'l', 'm', 'n', 'o')))
   
-psi.phi.plot <- ggplot(psi.phi.vals, aes(var_name, med), col = Region, group = Region) +
+# pdf(here("figures", "fig3.pdf"), width = 8, height = 6)
+ggplot(psi.phi.vals, aes(var_name, med), col = Region, group = Region) +
+# phi.psi.plot <- ggplot(psi.phi.vals, aes(var_name, med), col = Region, group = Region) +
   geom_errorbar(aes(ymin = lower, ymax = upper, col = Region, group = Region), 
                  position = position_dodge(0.5), width = 0.4) +
   geom_point(aes(col = Region, group = Region), position = position_dodge(0.5), size = 0.8) +
@@ -327,6 +369,7 @@ psi.phi.plot <- ggplot(psi.phi.vals, aes(var_name, med), col = Region, group = R
                               'm' = parse(text = TeX('$psi_{5B}')), 
                               'n' = parse(text = TeX('$psi_{BB}')), 
                               'o' = parse(text = TeX('$psi_{NB}$'))))
+# dev.off()
 
 #presentation
 ggplot(psi.phi.vals %>% filter(variable %nin% c('int.psiNB', 'int.psi5') & type == 'Survival'), 
@@ -382,6 +425,8 @@ ggplot(psi.phi.vals,
                               'm' = parse(text = TeX('$psi_{5B}')), 
                               'n' = parse(text = TeX('$psi_{BB}')), 
                               'o' = parse(text = TeX('$psi_{NB}$'))))
+
+pdf(here("figures", "fig5.pdf"), width = 8, height = 6)
 p_plot <- ggplot(p.vals, aes(age_label, med), col = Region, group = Region) +
   geom_errorbar(aes(ymin = lower, ymax = upper, col = Region, group = Region), 
                  position = position_dodge(0.5), width = 0.25) +
@@ -452,7 +497,7 @@ phi_t_vals <- phi_t_vals %>% filter(sex == 'Female') %>%
 #dots and CIs
 phi_t_plot <- ggplot(phi_t_vals, aes(year, med, group = variable)) +
   geom_errorbar(aes(x = year, ymin=lower, ymax=upper), show.legend = F, width = 0.5) +
-  geom_point(size = 0.8) + geom_line(size = 0.7) +
+  geom_point(size = 0.8) + geom_line(size = 0.5) +
   xlab('') + ylab(expression(paste('Survival probability ',  '(', phi, ')'))) +
   ggtitle('') +
   # facet_grid(sex~variable) +
@@ -480,7 +525,7 @@ psi_t_vals <- tvary %>%
 
 psi_t_plot <- ggplot(psi_t_vals, aes(year, med, group = variable)) +
   geom_errorbar(aes(x = year, ymin=lower, ymax=upper), width = 0.5, show.legend = F) +
-  geom_point(size = 0.8) + geom_line(size = 0.7) +
+  geom_point(size = 0.8) + geom_line(size = 0.5) +
   xlab('') + ylab(expression(paste('Pupping probability ',  '(', psi, ')'))) +
   ggtitle('') +
   facet_grid(~variable, labeller = label_parsed) +
@@ -528,7 +573,9 @@ p_t_plot <- ggplot(p_t_vals,
   scale_x_continuous(breaks = c(seq(0, 18, by = 2)), labels = c(seq(2000, 2018, by = 2)))
 
 #new error bars and points; no detection
-time_vary_plot <- plot_grid(phi_t_plot, psi_t_plot, labels = c('(a)', '(b)'),
+pdf(here("figures", "fig4.pdf"), width = 8, height = 6)
+# time_vary_plot <- plot_grid(phi_t_plot, psi_t_plot, labels = c('(a)', '(b)'),
+plot_grid(phi_t_plot, psi_t_plot, labels = c('(a)', '(b)'),
                             rel_heights = c(1,1), rel_widths = c(1.4,0.5),
                             label_size = 10, nrow = 2)
 
@@ -717,37 +764,37 @@ cov_dat_all <- cov_dat %>%
                                                           ifelse(grepl('mass', variable), 'Pup mass', 'Northward wind'))))))) %>%
   transform(var_name = factor(var_name, levels = c('Aleutian low', 'Arctic Oscillation Index', 'NPGO',
                                                    'Chlorophyll', 'Northward wind', 'Upwelling', 'Pup mass'),
-                              labels = c('Aleutian low', 'Arctic Oscillation Index', 'NPGO',
+                              labels = c('AL', 'AOI', 'NPGO',
                                          'Chlorophyll', 'Northward wind', 'Upwelling', 'Pup mass'))) %>%
   transform(Region = factor(Region, levels = c('east', 'west'), labels = c('Eastern', 'Western')))
 
 env_plot_all <- ggplot(cov_dat_all %>% filter(var_name != 'Pup mass'), aes(x = age, y = med), col = Season, group = Season) +
   geom_linerange(aes(ymin = lower, ymax = upper, col = Season, group = Season),
-                 position = position_dodge(0.5), size = 0.5) +
-  geom_point(aes(x = age, y = med, col = Season, group = Season), size = 0.8, 
+                 position = position_dodge(0.5), size = 0.35) +
+  geom_point(aes(x = age, y = med, col = Season, group = Season), size = 1, 
              position = position_dodge(0.5)) +
   geom_hline(yintercept = 0, linetype = 'dotted') +
   coord_flip() + 
   ylab(expression(paste('Logit-scale effect of covariate'))) + xlab('') +
-  plot_theme(legend.position = 'top', panel.border = element_rect(fill = NA),
+  pres_theme(legend.position = 'top', panel.border = element_rect(fill = NA),
              legend.title = element_blank()) +
   facet_grid(Region ~ var_name, drop = T, space = 'free', scales = 'free') +
   scale_color_manual(values = rainbow2[-c(1,4)])
 
 bmi_plot <- ggplot(bmi_dat %>% filter(exc == 'N'), aes(age, med, group = sex)) +
   geom_linerange(aes(ymin = lower, ymax = upper), size = 0.5, position = position_dodge(width = 0.5)) +
-  geom_point(aes(), position = position_dodge(width = 0.5), size = 0.8) +
+  geom_point(aes(), position = position_dodge(width = 0.35), size = 1) +
   geom_hline(yintercept = 0, linetype = 'dotted') +
   facet_grid(Region~sex, space = 'free', scales = 'free_y') + coord_flip() +
   ylab(expression(paste('Logit-scale effect of pup mass'))) + xlab('') + ggtitle(' ') +
-  plot_theme(legend.position = 'none', panel.border = element_rect(fill = NA),
+  pres_theme(legend.position = 'none', panel.border = element_rect(fill = NA),
              legend.title = element_blank(),
              title = element_text(size = 30),
              # axis.text.y = element_blank(),
              axis.ticks.y = element_blank()) +
   scale_y_continuous(limits = c(-1,1), breaks = c(-1,0,1))
 
-cov_plot_all <- plot_grid(env_plot_all, bmi_plot, rel_widths = c(0.75, 0.25))
+cov_plot_all <- plot_grid(env_plot_all, bmi_plot, rel_widths = c(0.65, 0.35))
 
 #presentation figures
 ggplot(bmi_dat %>% filter(exc == 'N') %>% filter(!grepl('psi', variable)), 
