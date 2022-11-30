@@ -31,6 +31,10 @@ Contains raw and processed data.
 
 Contains raw and processed results.  
 
+### [Figures](./figures)
+
+Contains pdf versions of all figures in manuscript. 
+
 ### Required Packages and Versions Used 
 
 Amanda list here
