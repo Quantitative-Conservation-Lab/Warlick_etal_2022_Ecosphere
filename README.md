@@ -17,10 +17,6 @@ ________________________________________________________________________________
 
 ### Table of Contents
 
-#### [Published PDF](link)
-
-This repository contains materials for the manuscript entitled *Environmental drivers of demography and potential factors limiting the recovery of an endangered marine top predator*.
-
 ### [Scripts](./scripts)
 
 + SSL_CJS_CHdata.Rmd creates capture histories from raw data.
@@ -37,10 +33,12 @@ Contains raw and processed results.
 
 ### Required Packages and Versions Used 
 
+Amanda list here
+
 ### Details of Article 
 
 Warlick AJ, DS Johnson, TS Gelatt, and SJ Converse. 2022. Environmental drivers of demography and potential factors limiting the recovery of an endangered marine top predator. Ecosphere 2022:e4325. https://doi.org/10.1002/ecs2.4325. 
 
 ### How to Use this Repository 
 
-
+Amanda add text here
