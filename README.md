@@ -37,7 +37,12 @@ Contains pdf versions of all figures in manuscript.
 
 ### Required Packages and Versions Used 
 
-Amanda list here
+here_1.0.1
+dplyr_1.0.5
+nimble_0.12.1
+lubridate_1.7.20
+reshape2_1.4.4
+hmisc_4.5-0
 
 ### Details of Article 
 
@@ -45,4 +50,4 @@ Warlick AJ, DS Johnson, TS Gelatt, and SJ Converse. 2022. Environmental drivers 
 
 ### How to Use this Repository 
 
-Amanda add text here
+Begin by running the code chunks in SSL_CJS_CHdata.Rmd to create the capture histories from the raw data. Use SSL_CJS.Rmd to run models and SSL_demographic_analysis_figs.R to create summary objects for inline references and figures. 
