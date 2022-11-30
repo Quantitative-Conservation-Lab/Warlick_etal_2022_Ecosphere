@@ -15,7 +15,7 @@ ________________________________________________________________________________
 3. Pup survival was positively correlated with the North Pacific Gyre Oscillation during the study period. 
 4. This work can advance efforts to identify factors driving regionally divergent abundance trends, with implications for population-level responses to future climate variability. 
 
-### Repository Directory
+### Table of Contents
 
 #### [Published PDF](link)
 
@@ -33,6 +33,14 @@ Contains raw and processed data.
 
 ### [Results](./results)
 
-Contains raw and processed results.   
+Contains raw and processed results.  
+
+### Required Packages and Versions Used 
+
+### Details of Article 
+
+Warlick AJ, DS Johnson, TS Gelatt, and SJ Converse. 2022. Environmental drivers of demography and potential factors limiting the recovery of an endangered marine top predator. Ecosphere 2022:e4325. https://doi.org/10.1002/ecs2.4325. 
+
+### How to Use this Repository 
 
 
